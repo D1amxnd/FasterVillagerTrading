@@ -2,13 +2,11 @@ package com.fastervillagertrading.mixin;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MerchantScreen.class)
 public abstract class MerchantScreenMixin {
-    @Shadow @Final protected AbstractContainerMenu menu;
     @Shadow private int shopItem;
 
     @Inject(method = "postButtonClick", at = @At("HEAD"), cancellable = true)
@@ -27,7 +24,7 @@ public abstract class MerchantScreenMixin {
             return;
         }
 
-        MerchantMenu merchantMenu = (MerchantMenu) menu;
+        MerchantMenu merchantMenu = ((MerchantScreen) (Object) this).getMenu();
         if (shopItem < 0 || shopItem >= merchantMenu.getOffers().size()
             || merchantMenu.getOffers().get(shopItem).isOutOfStock()
             || !hasRequiredItems(merchantMenu, merchantMenu.getOffers().get(shopItem))) {
@@ -39,10 +36,11 @@ public abstract class MerchantScreenMixin {
     private void fasterVillagerTrading$executeTrade(CallbackInfo callbackInfo) {
         Minecraft minecraft = Minecraft.getInstance();
         if (!minecraft.hasShiftDown() || minecraft.player == null || minecraft.gameMode == null
-                || !(menu instanceof MerchantMenu merchantMenu)) {
+                || !(((MerchantScreen) (Object) this).getMenu() instanceof MerchantMenu)) {
             return;
         }
 
+        MerchantMenu merchantMenu = ((MerchantScreen) (Object) this).getMenu();
         minecraft.gameMode.handleContainerInput(
                 merchantMenu.containerId,
                 2,
@@ -50,20 +48,20 @@ public abstract class MerchantScreenMixin {
                 ContainerInput.QUICK_MOVE,
                 minecraft.player
         );
-            minecraft.gameMode.handleContainerInput(
+        minecraft.gameMode.handleContainerInput(
                 merchantMenu.containerId,
                 0,
                 0,
                 ContainerInput.QUICK_MOVE,
                 minecraft.player
-            );
-            minecraft.gameMode.handleContainerInput(
+        );
+        minecraft.gameMode.handleContainerInput(
                 merchantMenu.containerId,
                 1,
                 0,
                 ContainerInput.QUICK_MOVE,
                 minecraft.player
-            );
+        );
     }
 
     private static boolean hasRequiredItems(MerchantMenu menu, MerchantOffer offer) {
