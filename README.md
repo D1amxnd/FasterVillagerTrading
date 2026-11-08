@@ -1,6 +1,6 @@
 # Faster Villager Trading
 
-A client-side Fabric mod for Minecraft 26.2. Shift-click a villager trade to move matching items from your inventory into the trade input slots. The trade itself is not executed automatically.
+A client-side Fabric mod for Minecraft 26.2. Shift-click a villager trade to execute it using items from your inventory and place the result in your inventory.
 
 ## Requirements
 
@@ -16,4 +16,4 @@ Open the project folder in IntelliJ IDEA or VS Code with the Java extensions ins
 
 ## Behavior
 
-Hold Shift and click a trade offer to fill its inputs using Minecraft 26.2's native item-transfer behavior. A regular click selects the offer without moving items. Complete the trade by clicking its output as usual.
+Hold Shift and click a trade offer to execute one trade. The mod checks that the full cost is available first, then uses Minecraft's native trade handling and quick-moves the result into your inventory. If the full cost is unavailable, no items are moved. Regular clicks continue to select offers normally.

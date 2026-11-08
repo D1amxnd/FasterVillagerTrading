@@ -3,7 +3,7 @@
   "package": "com.fastervillagertrading.mixin",
   "compatibilityLevel": "JAVA_25",
   "client": [
-    "MerchantMenuMixin"
+    "MerchantScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
