@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.fastervillagertrading.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "MerchantMenuMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

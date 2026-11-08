@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "faster_villager_trading",
+  "version": "${version}",
+  "name": "Faster Villager Trading",
+  "description": "Shift-click a villager trade to pull its required items from your inventory.",
+  "contributors": [
+    "D1amxnd"
+  ],
+  "contact": {
+    "sources": "https://github.com/D1amxnd/FasterVillagerTrading"
+  },
+  "license": "All-Rights-Reserved",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.fastervillagertrading.FasterVillagerTradingClient"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "fastervillagertrading.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "=${minecraft_version}",
+    "java": ">=25"
+  }
+}
